@@ -175,26 +175,27 @@ class ProgramFunctions
 	public:
 		static void displayMenu()
 		{
-			changeConsoleColour(14);
+			changeConsolecolor(14);
 			cout << "Pick something from the menu:" << endl << endl;
-			changeConsoleColour(11);
+			changeConsolecolor(11);
 			cout << "------------------------------" << endl;
-			cout << "1. Add" << endl;
-			cout << "2. Display all" << endl;
-			cout << "3. Edit node" << endl;
-			cout << "4. Display node" << endl;
+			cout << "1. Create list" << endl;
+			cout << "2. Add node" << endl;
+			cout << "3. Display node" << endl;
+			cout << "4. Edit node" << endl;
 			cout << "5. Delete node" << endl;
-			cout << "6. Create list" << endl;
-			cout << "7. Delete list" << endl;
-			cout << "8. Save list" << endl;
-			cout << "9. Import list" << endl;
+			cout << "6. Display all" << endl;
+			cout << "7. Save list" << endl;
+			cout << "8. Import list" << endl;
+			cout << "9. Delete list" << endl;
+		
 			cout << "------------------------------" << endl;
-			changeConsoleColour(14);
-			changeConsoleColour(15);
+			changeConsolecolor(14);
+			changeConsolecolor(15);
 
 
 		}
-		static void changeConsoleColour(int color_code)
+		static void changeConsolecolor(int color_code)
 		{
 			HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 			SetConsoleTextAttribute(console, color_code);
@@ -208,41 +209,42 @@ class ProgramFunctions
 				displayMenu();
 				int c;
 				cin >> c;
-				changeConsoleColour(10);
+				changeConsolecolor(10);
 				switch (c)
 				{
 				case 1:
+					f.createList(&head);
+					break;
+				case 2:
 					T data;
 					cout << "Please enter a value:" << endl;
 					cin >> data;
 					f.addNode(&head, data);
 					cout << "You entered:" << data << endl;
 					break;
-				case 2:
-					f.printList(head);
-					//cout << "You picked 2" << endl;
-					break;
 				case 3:
-					f.editNode(head);
+					f.printNode(head);
 					break;
 				case 4:
-					f.printNode(head);
+					f.editNode(head);
 					break;
 				case 5:
 					f.deleteNode(&head);
 					break;
 				case 6:
-					f.createList(&head);
+					f.printList(head);
+					//cout << "You picked 2" << endl;
 					break;
 				case 7:
-					f.deleteList(&head);
-					break;
-				case 8:
 					f.saveList(head);
 					break;
-				case 9:
+				case 8:
 					f.importList(&head);
+					break;	
+				case 9:
+					f.deleteList(&head);
 					break;
+				
 				default:
 					exit(0);
 					break;
