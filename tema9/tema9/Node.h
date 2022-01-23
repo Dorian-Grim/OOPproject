@@ -46,15 +46,7 @@ public:
 			cin >> value;
 
 
-			Node<T>* newNode = new Node<T>(value);
-			Node<T>* last = *headRef;
-			if (!*headRef) *headRef = newNode;
-			else
-			{
-				while (last->next) last = last->next;
-				last->next = newNode;
-				newNode->prev = last;
-			}
+append(&(*headRef));
 		}
 	}
 	static void printList(Node<T>* nodes)
