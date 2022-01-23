@@ -1,5 +1,7 @@
 #include <iostream>
 #include<Windows.h>
+#include<fstream>
+#include<string>
 using namespace std;
 
 template <typename T>
@@ -14,14 +16,13 @@ public:
 		prev = NULL;
 		next = NULL;
 	}
-
 };
 
 template <typename T>
 class NodeFunctions
 {
 public:
-	static void addNode(Node<T>** headRef, T newData)
+	void addNode(Node<T>** headRef, T newData)
 	{
 		Node<T>* newNode = new Node<T>(newData);
 		Node<T>* last = *headRef;
@@ -34,7 +35,7 @@ public:
 		}
 
 	}
-	static void createList(Node<T>** headRef)
+	void createList(Node<T>** headRef)
 	{
 		int numberNodes;
 		T value;
@@ -44,12 +45,10 @@ public:
 		{
 			cout << "Please enter value for " << i << ":";
 			cin >> value;
-
-
-append(&(*headRef));
+			addNode(&(*headRef), value);
 		}
 	}
-	static void printList(Node<T>* nodes)
+	void printList(Node<T>* nodes)
 	{
 		cout << "Printing the list" << endl;
 		while (nodes)
@@ -60,7 +59,7 @@ append(&(*headRef));
 		}
 		cout << endl;
 	}
-	static void editNode(Node<T>* nodes)
+	void editNode(Node<T>* nodes)
 	{
 		if (!nodes)
 		{
@@ -87,7 +86,7 @@ append(&(*headRef));
 		cout << "Node at index " << index << " now has the value " << value << endl;
 
 	}
-	static void printNode(Node<T>* nodes)
+	void printNode(Node<T>* nodes)
 	{
 		if (!nodes)
 		{
@@ -110,7 +109,7 @@ append(&(*headRef));
 		cout << "Node at index " << index << " has the value " << temp->data << endl;
 		
 	}
-	static void deleteNode(Node<T>** nodes)
+	void deleteNode(Node<T>** nodes)
 	{
 		if (!nodes)
 		{
@@ -139,6 +138,34 @@ append(&(*headRef));
 		}
 		temp->next = temp->next->next;
 	}
+	void deleteList(Node<T>** nodes)
+	{
+		*nodes=NULL;
+	}
+	void saveList(Node<T>* nodes)
+	{
+		if (!nodes)
+		{
+			cout << "Please create a list!";
+			return;
+		}
+		ofstream file("list.txt");
+		string valNodes = to_string(nodes->data) + "\n";
+		while(nodes->next) 
+		{
+			nodes = nodes->next;
+			valNodes = valNodes + to_string(nodes->data) + "\n";
+		}
+		file << valNodes;
+		file.close();
+	}
+	void importList(Node<T>** nodes)
+	{
+		deleteList(&(*nodes));
+		ifstream file("list.txt");
+		string line;
+		while (getline(file, line)) addNode((&(*nodes)),stoi(line));
+	}
 
 };
 
@@ -158,6 +185,9 @@ class ProgramFunctions
 			cout << "4. Display node" << endl;
 			cout << "5. Delete node" << endl;
 			cout << "6. Create list" << endl;
+			cout << "7. Delete list" << endl;
+			cout << "8. Save list" << endl;
+			cout << "9. Import list" << endl;
 			cout << "------------------------------" << endl;
 			changeConsoleColour(14);
 			changeConsoleColour(15);
@@ -203,6 +233,15 @@ class ProgramFunctions
 					break;
 				case 6:
 					f.createList(&head);
+					break;
+				case 7:
+					f.deleteList(&head);
+					break;
+				case 8:
+					f.saveList(head);
+					break;
+				case 9:
+					f.importList(&head);
 					break;
 				default:
 					exit(0);

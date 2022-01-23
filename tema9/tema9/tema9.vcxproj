@@ -139,7 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Node.cpp" />
     <ClCompile Include="tema9.cpp" />
   </ItemGroup>
   <ItemGroup>
